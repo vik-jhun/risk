@@ -140,8 +140,8 @@ class Board(object):
         		next_country = path[territory + 1]
         		if next_country not in risk.definitions.territory_neighbors[current_country]:
         			return False
-            return True
-    
+                return True
+
     def is_valid_attack_path(self, path):
         '''
         The rules of Risk state that when attacking, 
