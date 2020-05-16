@@ -82,8 +82,8 @@ class Board(object):
         player_id = self.owner(territory_id)
         neighbor_ids = risk.definitions.territory_neighbors[territory_id]
         for neighbor in neighbor_ids:
-        	if self.owner(neighbor) != player_id:
-        		hostile_neighbors.append(neighbor)
+            if self.owner(neighbor) != player_id:
+                hostile_neighbors.append(neighbor)
         return hostile_neighbors
 
     def friendly_neighbors(self, territory_id):
@@ -102,9 +102,9 @@ class Board(object):
         player_id = self.owner(territory_id)
         neighbor_ids = risk.definitions.territory_neighbors[territory_id]
         for neighbor in neighbor_ids:
-        	if self.owner(neighbor) == player_id:
-        		friendlies.append(neighbor)
-        	return friendlies
+            if self.owner(neighbor) == player_id:
+                friendlies.append(neighbor)
+            return friendlies
 
 
     
@@ -128,18 +128,18 @@ class Board(object):
 
         # for 3
         if len(path) == 0 or len(path) == 1:
-        	return True
+            return True
 
         # for 2
         if len(path) != len(set(path)):
-        	return False
+            return False
 
         else:
             for territory in range(len(path)-1):
-        		current_country = path[territory]
-        		next_country = path[territory + 1]
-        		if next_country not in risk.definitions.territory_neighbors[current_country]:
-        			return False
+                current_country = path[territory]
+                next_country = path[territory + 1]
+                if next_country not in risk.definitions.territory_neighbors[current_country]:
+                    return False
             return True
 
     def is_valid_attack_path(self, path):
@@ -161,13 +161,13 @@ class Board(object):
         '''
 
         if not self.is_valid_path(path) or len(path)<2:
-        	return False
+            return False
         else:
-        	player_id = self.owner(path[0])
-        	for country in path:
-        		if path[0] != country and self.owner(country) == player_id:
-        			return False
-        	return True
+            player_id = self.owner(path[0])
+            for country in path:
+                if path[0] != country and self.owner(country) == player_id:
+                    return False
+            return True
 
 
     def cost_of_attack_path(self, path):
@@ -184,9 +184,9 @@ class Board(object):
 
         cost = 0
         for country in path:
-        	if country == path[0]:
-        		continue
-        	cost = cost + self.armies(country)
+            if country == path[0]:
+                continue
+            cost = cost + self.armies(country)
         return cost
 
 
@@ -216,48 +216,48 @@ class Board(object):
         board = list(board.keys())
 
         if source == target:
-        	return stack
+            return stack
 
         while queue:
-        	cur_territory = queue.popleft()
+            cur_territory = queue.popleft()
 
-        	board_info = [territory for territory in board if territory in self.neighbors(cur_territory[-1])]
-        	for territory in board_info:
-        		if territory == target:
-        			cur_territory.append(territory)
-        			return cur_territory
-        		copy_stack = copy.deepcopy(cur_territory)
-        		copy_stack.append(territory)
-        		queue.append(copy_stack)
-        		board.remove(territory)
+            board_info = [territory for territory in board if territory in self.neighbors(cur_territory[-1])]
+            for territory in board_info:
+                if territory == target:
+                    cur_territory.append(territory)
+                    return cur_territory
+                copy_stack = copy.deepcopy(cur_territory)
+                copy_stack.append(territory)
+                queue.append(copy_stack)
+                board.remove(territory)
 
     def _fortify(self, source, target):
 
-    	stack = []
-    	stack.append(source)
-    	queue = deque([])
-    	queue.append(stack)
+        stack = []
+        stack.append(source)
+        queue = deque([])
+        queue.append(stack)
 
-    	board = risk.definitions.territory_names
-    	board = list(board.keys())
+        board = risk.definitions.territory_names
+        board = list(board.keys())
 
-    	if source == target:
-    		return stack
+        if source == target:
+            return stack
 
-    	while queue:
-    		cur_territory = queue.popleft()
-    		player_id = self.owner(cur_territory[-1])
-    		adj = self.neighbors(cur_territory[-1])
-    		neighbor = [country for country in adj if self.owner(country) == player_id]
-    		board_info = [territory for territory in board if territory in neighbor]
-    		for territory in board_info:
-    			if territory == target:
-    				cur_territory.append(territory)
-    				return cur_territory
-    			copy_stack = copy.deepcopy(cur_territory)
-    			copy_stack.append(territory)
-    			queue.append(copy_stack)
-    			board.remove(territory)
+        while queue:
+            cur_territory = queue.popleft()
+            player_id = self.owner(cur_territory[-1])
+            adj = self.neighbors(cur_territory[-1])
+            neighbor = [country for country in adj if self.owner(country) == player_id]
+            board_info = [territory for territory in board if territory in neighbor]
+            for territory in board_info:
+                if territory == target:
+                    cur_territory.append(territory)
+                    return cur_territory
+                copy_stack = copy.deepcopy(cur_territory)
+                copy_stack.append(territory)
+                queue.append(copy_stack)
+                board.remove(territory)
 
 
     def can_fortify(self, source, target):
@@ -275,7 +275,7 @@ class Board(object):
         '''
 
         if self._fortify(source, target) == None:
-        	return False
+            return False
         return True
 
 
@@ -294,7 +294,7 @@ class Board(object):
         '''
 
         if not self.can_attack(source, target):
-        	return None
+            return None
 
         territories = {}
         territories[source] = [source]
@@ -304,52 +304,52 @@ class Board(object):
         visited = [source]
         player_id = self.owner(source)
         while pq:
-        	(cur_ter, cur_ter_priority) = pq.popitem()
-        	board_info = [country for country in self.neighbors(cur_ter) if (country not in visited and self.owner(country) != player_id)]
-        	for territory in board_info:
-        		if territory == target:
-        			path = territories[cur_ter]
-        			path.append(territory)
-        			return path
-        		copy_path = copy.deepcopy(territories[cur_ter])
-        		copy_path.append(territory)
-        		priority = self.armies(territory) + cur_ter_priority
+            (cur_ter, cur_ter_priority) = pq.popitem()
+            board_info = [country for country in self.neighbors(cur_ter) if (country not in visited and self.owner(country) != player_id)]
+            for territory in board_info:
+                if territory == target:
+                    path = territories[cur_ter]
+                    path.append(territory)
+                    return path
+                copy_path = copy.deepcopy(territories[cur_ter])
+                copy_path.append(territory)
+                priority = self.armies(territory) + cur_ter_priority
 
-        		if territory not in pq:
-        			territories[territory] = copy_path
-        			pq[territory] = cur_ter_priority+self.armies(territory)
-        		elif priority <= pq[territory]:
-        			territories[territory] = copy_path
-        			pq[territory] = priority
-        	visited.append(cur_ter)
+                if territory not in pq:
+                    territories[territory] = copy_path
+                    pq[territory] = cur_ter_priority+self.armies(territory)
+                elif priority <= pq[territory]:
+                    territories[territory] = copy_path
+                    pq[territory] = priority
+            visited.append(cur_ter)
 
     def _attack(self, source, target):
 
-    	stack = []
-    	stack.append(source)
-    	queue = deque([])
-    	queue.append(stack)
+        stack = []
+        stack.append(source)
+        queue = deque([])
+        queue.append(stack)
 
-    	board = risk.definitions.territory_names
-    	board = list(board.keys())
+        board = risk.definitions.territory_names
+        board = list(board.keys())
 
-    	if source == target:
-    		return stack
+        if source == target:
+            return stack
 
-    	while queue:
-    		cur_territory = queue.popleft()
-    		player_id = self.owner(source)
-    		adj = self.neighbors(cur_territory[-1])
-    		neighbor = [country for country in adj if self.owner(country) != player_id]
-    		board_info = [territory for territory in board if territory in neighbor]
-    		for territory in board_info:
-    			if territory == target:
-    				cur_territory.append(territory)
-    				return cur_territory
-    			copy_stack = copy.deepcopy(cur_territory)
-    			copy_stack.append(territory)
-    			queue.append(copy_stack)
-    			board.remove(territory)
+        while queue:
+            cur_territory = queue.popleft()
+            player_id = self.owner(source)
+            adj = self.neighbors(cur_territory[-1])
+            neighbor = [country for country in adj if self.owner(country) != player_id]
+            board_info = [territory for territory in board if territory in neighbor]
+            for territory in board_info:
+                if territory == target:
+                    cur_territory.append(territory)
+                    return cur_territory
+                copy_stack = copy.deepcopy(cur_territory)
+                copy_stack.append(territory)
+                queue.append(copy_stack)
+                board.remove(territory)
 
 
 
@@ -364,7 +364,7 @@ class Board(object):
         '''
 
         if self._attack(source, target) == None or source == target:
-        	return False
+            return False
         return True
 
 
