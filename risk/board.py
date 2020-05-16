@@ -306,7 +306,7 @@ class Board(object):
         player_id = self.owner(source)
         while pq:
         	(cur_ter, cur_ter_priority) = pq.popitem()
-        	board_info = [country for country in self.neighbors(cur_ter) if (country not in visited and self.owner(country) != player_)]
+        	board_info = [country for country in self.neighbors(cur_ter) if (country not in visited and self.owner(country) != player_id)]
         	for territory in board_info:
         		if territory == target:
         			path = territories[cur_ter]
