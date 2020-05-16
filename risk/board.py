@@ -168,7 +168,7 @@ class Board(object):
         	for country in path:
         		if path[0] != country and self.owner(country) == player_id:
         			return False
-        		return True
+        	return True
 
 
     def cost_of_attack_path(self, path):
