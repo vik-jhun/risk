@@ -141,7 +141,6 @@ class Board(object):
         		if next_country not in risk.definitions.territory_neighbors[current_country]:
         			return False
             return True
-
     
     def is_valid_attack_path(self, path):
         '''
