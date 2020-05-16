@@ -1,4 +1,4 @@
-t os
+import os
 import random
 from collections import namedtuple
 
