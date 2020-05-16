@@ -1,4 +1,4 @@
-import os
+t os
 import random
 from collections import namedtuple
 
@@ -135,12 +135,12 @@ class Board(object):
         	return False
 
         else:
-        	for territory in range(len(path)-1):
+            for territory in range(len(path)-1):
         		current_country = path[territory]
         		next_country = path[territory + 1]
         		if next_country not in risk.definitions.territory_neighbors[current_country]:
         			return False
-                return True
+            return True
 
     def is_valid_attack_path(self, path):
         '''
